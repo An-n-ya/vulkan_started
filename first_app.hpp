@@ -1,11 +1,12 @@
 #pragma once
 
-#include "engine_window.hpp"
-#include "engine_pipeline.hpp"
+#include "engine_device.hpp"
+#include "engine_model.hpp"
 #include "engine_pipeline.hpp"
 #include "engine_swap_chain.hpp"
-#include "engine_model.hpp"
+#include "engine_window.hpp"
 
+// std
 #include <memory>
 #include <vector>
 
@@ -19,6 +20,7 @@ namespace engine
 
         FirstApp();
         ~FirstApp();
+
         FirstApp(const FirstApp &) = delete;
         FirstApp &operator=(const FirstApp &) = delete;
 
@@ -28,21 +30,17 @@ namespace engine
         void loadModels();
         void createPipelineLayout();
         void createPipeline();
-        void createCommandBuffer();
+        void createCommandBuffers();
         void drawFrame();
-        void sierpinski(
-            std::vector<EngineModel::Vertex> &vertices,
-            int depth,
-            glm::vec2 left,
-            glm::vec2 right,
-            glm::vec2 top);
-        EngineWindow engineWindow{WIDTH, HEIGHT, "hello vulkan"};
+        void recreateSwapChain();
+        void recordCommandBuffer(int imageIndex);
+
+        EngineWindow engineWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
         EngineDevice engineDevice{engineWindow};
-        EngineSwapChain engineSwapChain{engineDevice, engineWindow.getExtent()};
-        // EnginePipeline enginePipeline{engineDevice, "shaders/simple_shader.vert.spv", "shaders/simple_shader.frag.spv", EnginePipeline::defaultPipelineConfigInfo(WIDTH, HEIGHT)};
+        std::unique_ptr<EngineSwapChain> engineSwapChain;
+        std::unique_ptr<EngineModel> engineModel;
         std::unique_ptr<EnginePipeline> enginePipeline;
         VkPipelineLayout pipelineLayout;
         std::vector<VkCommandBuffer> commandBuffers;
-        std::unique_ptr<EngineModel> engineModel;
     };
-}
+} // namespace engine

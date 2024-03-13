@@ -1,8 +1,11 @@
+
 #include "first_app.hpp"
 
+// std
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
+
 int main()
 {
     engine::FirstApp app{};
