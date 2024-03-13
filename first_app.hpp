@@ -30,6 +30,12 @@ namespace engine
         void createPipeline();
         void createCommandBuffer();
         void drawFrame();
+        void sierpinski(
+            std::vector<EngineModel::Vertex> &vertices,
+            int depth,
+            glm::vec2 left,
+            glm::vec2 right,
+            glm::vec2 top);
         EngineWindow engineWindow{WIDTH, HEIGHT, "hello vulkan"};
         EngineDevice engineDevice{engineWindow};
         EngineSwapChain engineSwapChain{engineDevice, engineWindow.getExtent()};

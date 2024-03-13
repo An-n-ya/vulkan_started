@@ -29,7 +29,7 @@ namespace engine
         ~EnginePipeline();
 
         EnginePipeline(const EnginePipeline &) = delete;
-        void operator=(const EnginePipeline &) = delete;
+        EnginePipeline &operator=(const EnginePipeline &) = delete;
 
         void bind(VkCommandBuffer commandBuffer);
 
