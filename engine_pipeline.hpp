@@ -44,7 +44,7 @@ namespace engine
         void bind(VkCommandBuffer commandBuffer);
 
         static void defaultPipelineConfigInfo(
-            PipelineConfigInfo &configInfo, uint32_t width, uint32_t height);
+            PipelineConfigInfo &configInfo);
 
     private:
         static std::vector<char> readFile(const std::string &filepath);
