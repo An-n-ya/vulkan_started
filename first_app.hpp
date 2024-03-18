@@ -1,7 +1,7 @@
 #pragma once
 
 #include "engine_device.hpp"
-#include "engine_model.hpp"
+#include "engine_game_object.hpp"
 #include "engine_pipeline.hpp"
 #include "engine_swap_chain.hpp"
 #include "engine_window.hpp"
@@ -27,18 +27,19 @@ namespace engine
         void run();
 
     private:
-        void loadModels();
+        void loadGameObjects();
         void createPipelineLayout();
         void createPipeline();
         void createCommandBuffers();
         void drawFrame();
         void recreateSwapChain();
         void recordCommandBuffer(int imageIndex);
+        void renderGameObjects(VkCommandBuffer commandBuffer);
 
         EngineWindow engineWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
         EngineDevice engineDevice{engineWindow};
         std::unique_ptr<EngineSwapChain> engineSwapChain;
-        std::unique_ptr<EngineModel> engineModel;
+        std::vector<EngineGameObject> gameObjects;
         std::unique_ptr<EnginePipeline> enginePipeline;
         VkPipelineLayout pipelineLayout;
         std::vector<VkCommandBuffer> commandBuffers;
