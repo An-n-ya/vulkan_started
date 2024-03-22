@@ -72,6 +72,7 @@ namespace engine
         VkCommandBuffer commandBuffer, std::vector<EngineGameObject> &gameObjects, const EngineCamera camera)
     {
         enginePipeline->bind(commandBuffer);
+        auto projectionView = camera.getProjection() * camera.getView();
 
         for (auto &obj : gameObjects)
         {
@@ -80,7 +81,7 @@ namespace engine
 
             SimplePushConstantData push{};
             push.color = obj.color;
-            push.transform = camera.getProjection() * obj.transform.mat4();
+            push.transform = projectionView * obj.transform.mat4();
 
             vkCmdPushConstants(
                 commandBuffer,

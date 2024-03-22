@@ -27,12 +27,14 @@ namespace engine
         //           << "" << std::endl;
         SimpleRenderSystem simpleRenderSystem{engineDevice, engineRenderer.getSwapChainRenderPass()};
         EngineCamera camera{};
+        camera.setViewDirection(glm::vec3{0.f}, glm::vec3{0.0f, 0.f, -1.f});
 
         while (!engineWindow.shouldClose())
         {
 
             float aspect = engineRenderer.getAspectRatio();
-            camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+            // camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
             glfwPollEvents();
             if (auto commandBuffer = engineRenderer.beginFrame())
             {
@@ -112,7 +114,7 @@ namespace engine
 
         auto cube = EngineGameObject::createGameObject();
         cube.model = engineModel;
-        cube.transform.translation = {.0f, .0f, .0f};
+        cube.transform.translation = {.0f, .0f, -2.0f};
         cube.transform.scale = {.5f, .5f, .5f};
 
         gameObjects.push_back(std::move(cube));
