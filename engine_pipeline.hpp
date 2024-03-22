@@ -14,8 +14,6 @@ namespace engine
         PipelineConfigInfo(const PipelineConfigInfo &) = delete;
         PipelineConfigInfo &operator=(const PipelineConfigInfo &) = delete;
 
-        VkViewport viewport;
-        VkRect2D scissor;
         VkPipelineViewportStateCreateInfo viewportInfo;
         VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
         VkPipelineRasterizationStateCreateInfo rasterizationInfo;
@@ -23,6 +21,8 @@ namespace engine
         VkPipelineColorBlendAttachmentState colorBlendAttachment;
         VkPipelineColorBlendStateCreateInfo colorBlendInfo;
         VkPipelineDepthStencilStateCreateInfo depthStencilInfo;
+        std::vector<VkDynamicState> dynamicStateEnables;
+        VkPipelineDynamicStateCreateInfo dynamicStateInfo;
         VkPipelineLayout pipelineLayout = nullptr;
         VkRenderPass renderPass = nullptr;
         uint32_t subpass = 0;
@@ -43,8 +43,7 @@ namespace engine
 
         void bind(VkCommandBuffer commandBuffer);
 
-        static void defaultPipelineConfigInfo(
-            PipelineConfigInfo &configInfo);
+        static void defaultPipelineConfigInfo(PipelineConfigInfo &configInfo);
 
     private:
         static std::vector<char> readFile(const std::string &filepath);
