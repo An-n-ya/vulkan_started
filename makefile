@@ -1,4 +1,6 @@
-CFLAGS=-std=c++17 -O2
+TINYOBJ_PATH = /home/annya/libs/tiny_obj_loader
+
+CFLAGS=-std=c++17 -I$(TINYOBJ_PATH) -I.
 LDFLAGS=-lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 .PHONY: test clean

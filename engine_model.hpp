@@ -9,6 +9,7 @@
 
 // std
 #include <vector>
+#include <memory>
 
 namespace engine
 {
@@ -19,6 +20,8 @@ namespace engine
         {
             glm::vec3 position{};
             glm::vec3 color{};
+            glm::vec3 normal{};
+            glm::vec2 uv{};
 
             static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
             static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
@@ -28,6 +31,8 @@ namespace engine
         {
             std::vector<Vertex> vertices{};
             std::vector<uint32_t> indices{};
+
+            void loadModel(const std::string &filepath);
         };
 
         EngineModel(EngineDevice &device, const EngineModel::Builder &builder);
@@ -35,6 +40,9 @@ namespace engine
 
         EngineModel(const EngineModel &) = delete;
         EngineModel &operator=(const EngineModel &) = delete;
+
+        static std::unique_ptr<EngineModel> createModelFromFile(
+            EngineDevice &device, const std::string &filepath);
 
         void bind(VkCommandBuffer commandBuffer);
         void draw(VkCommandBuffer commandBuffer);
