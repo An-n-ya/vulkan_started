@@ -9,8 +9,24 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
+#include <engine_utils.hpp>
+
 #include <iostream>
 #include <unordered_map>
+
+namespace std
+{
+    template <>
+    struct hash<engine::EngineModel::Vertex>
+    {
+        size_t operator()(engine::EngineModel::Vertex const &vertex) const
+        {
+            size_t seed = 0;
+            engine::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
+            return seed;
+        }
+    };
+} // namespace std
 
 namespace engine
 {
@@ -104,13 +120,13 @@ namespace engine
                     };
                 }
 
-                // if (uniqueVertices.count(vertex) == 0)
-                // {
-                //     uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-                //     vertices.push_back(vertex);
-                // }
-                // indices.push_back(uniqueVertices[vertex]);
-                vertices.push_back(vertex);
+                if (uniqueVertices.count(vertex) == 0)
+                {
+                    uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
+                    vertices.push_back(vertex);
+                }
+                indices.push_back(uniqueVertices[vertex]);
+                // vertices.push_back(vertex);
             }
         }
     }
