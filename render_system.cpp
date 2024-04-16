@@ -18,7 +18,7 @@ namespace engine
     struct SimplePushConstantData
     {
         glm::mat4 transform{1.f};
-        alignas(16) glm::vec3 color;
+        glm::mat4 normalMatrix{1.f};
     };
 
     SimpleRenderSystem::SimpleRenderSystem(EngineDevice &device, VkRenderPass renderPass)
@@ -77,7 +77,7 @@ namespace engine
         for (auto &obj : gameObjects)
         {
             SimplePushConstantData push{};
-            push.color = obj.color;
+            push.normalMatrix = obj.transform.normalMatrix();
             push.transform = projectionView * obj.transform.mat4();
 
             vkCmdPushConstants(

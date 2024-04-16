@@ -67,7 +67,16 @@ namespace engine
 
         auto gameObj = EngineGameObject::createGameObject();
         gameObj.model = engineModel;
-        gameObj.transform.translation = {.0f, .0f, 2.0f};
+        gameObj.transform.translation = {-0.5f, .5f, 2.0f};
+        gameObj.transform.scale = glm::vec3{3.0f, 1.5f, 3.f};
+
+        gameObjects.push_back(std::move(gameObj));
+
+        engineModel = EngineModel::createModelFromFile(engineDevice, "models/flat_vase.obj");
+
+        gameObj = EngineGameObject::createGameObject();
+        gameObj.model = engineModel;
+        gameObj.transform.translation = {.5f, .5f, 2.0f};
         gameObj.transform.scale = glm::vec3{3.0f};
 
         gameObjects.push_back(std::move(gameObj));
